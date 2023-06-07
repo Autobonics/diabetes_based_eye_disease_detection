@@ -73,11 +73,10 @@ export default function HomePage() {
         }}
       /> */}
       {/* {user && <BiometricScanners user={user} />} */}
-      <PredictionComponent link='https://teachablemachine.withgoogle.com/models/2K3PySiLF/model.json' decease="Diabetes"/>
 
       <Box height="30px"/>
 
-      <PredictionComponent link='https://storage.googleapis.com/tm-model/qKPfzqUMX/model.json' decease="Glucoma"/>
+      <PredictionComponent/>
       
     </UserVerification>
   );

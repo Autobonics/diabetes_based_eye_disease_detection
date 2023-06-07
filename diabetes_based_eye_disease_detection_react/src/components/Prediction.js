@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Button, LinearProgress, Typography } from "@mui/material";
 
-const PredictionComponent = ({ link, decease }) => {
+const PredictionComponent = () => {
   const [selectedImage, setSelectedImage] = useState(null);
-  const [predictionResult, setPredictionResult] = useState('');
+  const [predictionResult, setPredictionResult] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const displayPred = (predClass) => predClass === 0 ? "No Diabetic Retinoscopy" : `Diabetic Retinoscopy Severity : ${predClass}`;
 
   const getPrediction = async () => {
     setLoading(true);
@@ -20,7 +22,7 @@ const PredictionComponent = ({ link, decease }) => {
       .then(data => {
         console.log(data);
         const predictedClass = data.predicted_class;
-        setPredictionResult(`Predicted Class: ${predictedClass}`);
+        setPredictionResult(predictedClass);
         setLoading(false);
       })
       .catch(error => {
@@ -52,17 +54,13 @@ const PredictionComponent = ({ link, decease }) => {
       <Button variant="contained" color="primary" onClick={getPrediction}>
         Predict
       </Button>
-      {predictionResult && (
-        <Typography variant="h6" sx={{ marginTop: "20px" }}>
-          {predictionResult}
-        </Typography>
-      )}
-
-      {predictionResult && (
-        <Typography variant="h4">
-          Prediction Result: {predictionResult}
-        </Typography>
-      )}
+      {
+        predictionResult && (
+          <Typography variant="h4">
+            {displayPred(predictionResult)}
+          </Typography>
+        )
+      }
     </div>
   );
 };

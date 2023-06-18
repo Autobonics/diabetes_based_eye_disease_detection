@@ -6,7 +6,7 @@ const PredictionComponent = () => {
   const [predictionResult, setPredictionResult] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const displayPred = (predClass) => predClass === 0 ? "No Diabetic Retinoscopy" : `Diabetic Retinoscopy Severity : ${predClass}`;
+  const displayPred = (predClass) => predClass === 0 ? "No Diabetic Retinoscopy" : `Diabetic Retinoscopy Stage ${predClass}`;
 
   const getPrediction = async () => {
     setLoading(true);
@@ -22,6 +22,7 @@ const PredictionComponent = () => {
       .then(data => {
         console.log(data);
         const predictedClass = data.predicted_class;
+        console.log(`Got Predction : ${predictedClass}`)
         setPredictionResult(predictedClass);
         setLoading(false);
       })
@@ -50,12 +51,14 @@ const PredictionComponent = () => {
         />
       )}
 
-      <input type="file" accept="image/*" onChange={handleImageUpload} />
+      <input type="file" accept="image/*" onChange={handleImageUpload} style={{
+        color: "white"
+      }} />
       <Button variant="contained" color="primary" onClick={getPrediction}>
         Predict
       </Button>
       {
-        predictionResult && (
+        predictionResult !== null && (
           <Typography variant="h4">
             {displayPred(predictionResult)}
           </Typography>
